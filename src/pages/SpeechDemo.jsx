@@ -1,8 +1,8 @@
-import styled from 'styled-components'
-import useSpeechRecognition from '@hooks/useSpeechRecognition'
-import useSpeechSynthesis from '@hooks/useSpeechSynthesis'
-import Button from '@components/common/Button'
-import { useState } from 'react'
+import styled from "styled-components";
+import useSpeechRecognition from "@hooks/useSpeechRecognition";
+import useSpeechSynthesis from "@hooks/useSpeechSynthesis";
+import Button from "@components/common/Button";
+import { useState } from "react";
 
 const Container = styled.div`
   display: grid;
@@ -12,19 +12,19 @@ const Container = styled.div`
   @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
     grid-template-columns: 1fr;
   }
-`
+`;
 
 const Card = styled.div`
   background: ${({ theme }) => theme.colors.bgCard};
   border: 1px solid ${({ theme }) => theme.colors.border};
   border-radius: ${({ theme }) => theme.radii.lg};
   padding: ${({ theme }) => theme.spacing.xl};
-`
+`;
 
 const Title = styled.h2`
-  font-size: ${({ theme }) => theme.fontSizes['2xl']};
+  font-size: ${({ theme }) => theme.fontSizes["2xl"]};
   margin-bottom: ${({ theme }) => theme.spacing.lg};
-`
+`;
 
 const TranscriptBox = styled.div`
   background: rgba(0, 0, 0, 0.2);
@@ -34,7 +34,7 @@ const TranscriptBox = styled.div`
   margin: ${({ theme }) => theme.spacing.md} 0;
   line-height: 1.7;
   color: ${({ theme }) => theme.colors.textSecondary};
-`
+`;
 
 const TextArea = styled.textarea`
   width: 100%;
@@ -52,26 +52,32 @@ const TextArea = styled.textarea`
   &:focus {
     border-color: ${({ theme }) => theme.colors.primary};
   }
-`
+`;
 
 export default function SpeechDemo() {
   const {
-    isListening, transcript, interimTranscript,
+    isListening,
+    transcript,
+    interimTranscript,
     isSupported: recSupported,
-    startListening, stopListening, resetTranscript,
-  } = useSpeechRecognition({ lang: 'vi-VN' })
+    startListening,
+    stopListening,
+    resetTranscript,
+  } = useSpeechRecognition({ lang: "vi-VN" });
 
   const {
-    voices, isSpeaking,
+    voices,
+    isSpeaking,
     isSupported: synthSupported,
-    speak, stop,
-  } = useSpeechSynthesis()
+    speak,
+    stop,
+  } = useSpeechSynthesis();
 
   const [ttsText, setTtsText] = useState(
-    'Xin chao! Day la demo chuyen van ban thanh giong noi tieng Viet.'
-  )
+    "Xin chao! Day la demo chuyen van ban thanh giong noi tieng Viet.",
+  );
 
-  const viVoices = voices.filter((v) => v.lang.startsWith('vi'))
+  const viVoices = voices.filter((v) => v.lang.startsWith("vi"));
 
   return (
     <>
@@ -80,32 +86,40 @@ export default function SpeechDemo() {
         {/* Speech Recognition */}
         <Card>
           <h3>Nhan dang giong noi</h3>
-          <p style={{ opacity: 0.6, marginBottom: 16 }}>Noi tieng Viet - Van ban</p>
+          <p style={{ opacity: 0.6, marginBottom: 16 }}>
+            Noi tieng Viet - Van ban
+          </p>
 
-          <div style={{ display: 'flex', gap: 8 }}>
+          <div style={{ display: "flex", gap: 8 }}>
             <Button
-              variant={isListening ? 'danger' : 'primary'}
+              variant={isListening ? "danger" : "primary"}
               onClick={isListening ? stopListening : startListening}
               disabled={!recSupported}
             >
-              {isListening ? 'Dung' : 'Bat dau noi'}
+              {isListening ? "Dung" : "Bat dau noi"}
             </Button>
-            <Button variant="secondary" onClick={resetTranscript}>Xoa</Button>
+            <Button variant="secondary" onClick={resetTranscript}>
+              Xoa
+            </Button>
           </div>
 
           <TranscriptBox>
             {transcript}
             {interimTranscript && (
-              <span style={{ color: '#888', fontStyle: 'italic' }}>{interimTranscript}</span>
+              <span style={{ color: "#888", fontStyle: "italic" }}>
+                {interimTranscript}
+              </span>
             )}
             {!transcript && !interimTranscript && (
-              <span style={{ fontStyle: 'italic' }}>Ket qua se hien o day...</span>
+              <span style={{ fontStyle: "italic" }}>
+                Ket qua se hien o day...
+              </span>
             )}
           </TranscriptBox>
         </Card>
 
         {/* Speech Synthesis */}
-        <Card>
+        {/* <Card>
           <h3>Chuyen van ban - Giong noi</h3>
           <p style={{ opacity: 0.6, marginBottom: 16 }}>
             {viVoices.length} giong Viet kha dung
@@ -133,8 +147,8 @@ export default function SpeechDemo() {
               {isSpeaking ? 'Dung' : 'Phat am'}
             </Button>
           </div>
-        </Card>
+        </Card> */}
       </Container>
     </>
-  )
+  );
 }
